@@ -1,0 +1,292 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NuGet.DependencyResolver.Core</name>
+    </assembly>
+    <members>
+        <member name="T:NuGet.DependencyResolver.GraphEdge`1">
+            <summary>
+            GraphEdge holds a reference to the parent node, the incoming edge to the parent, and
+            the out going edge to the current position of the walk.
+            
+            Root -&gt; OuterEdge -&gt; Node -&gt; Edge -&gt; (Current Node)
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.GraphEdge`1.OuterEdge">
+            <summary>
+            Incoming edge to <see cref="P:NuGet.DependencyResolver.GraphEdge`1.Item" />.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.GraphEdge`1.Item">
+            <summary>
+            Graph node between <see cref="P:NuGet.DependencyResolver.GraphEdge`1.OuterEdge" /> and <see cref="P:NuGet.DependencyResolver.GraphEdge`1.Edge" />.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.GraphEdge`1.Edge">
+            <summary>
+            Outgoing edge from <see cref="P:NuGet.DependencyResolver.GraphEdge`1.Item" />.
+            </summary>
+        </member>
+        <member name="T:NuGet.DependencyResolver.LibraryRangeCacheKey">
+            <summary>
+            Helper class to hold a library range and framework.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.LibraryRangeCacheKey.Framework">
+            <summary>
+            Target framework
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.LibraryRangeCacheKey.LibraryRange">
+            <summary>
+            Library range information.
+            </summary>
+        </member>
+        <member name="M:NuGet.DependencyResolver.PackagingUtility.GetLibraryDependencyFromNuspec(NuGet.Packaging.Core.PackageDependency)">
+            <summary>
+            Convert a nuspec dependency to a library dependency.
+            </summary>
+        </member>
+        <member name="T:NuGet.DependencyResolver.IRemoteDependencyProvider">
+            <summary>
+            A remote dependency provider.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.IRemoteDependencyProvider.IsHttp">
+            <summary>
+            Gets a flag indicating whether or not the provider source is HTTP or HTTPS.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.IRemoteDependencyProvider.Source">
+            <summary>
+            Gets the package source.
+            </summary>
+            <remarks>Optional. This will be <c>null</c> for project providers.</remarks>
+        </member>
+        <member name="M:NuGet.DependencyResolver.IRemoteDependencyProvider.FindLibraryAsync(NuGet.LibraryModel.LibraryRange,NuGet.Frameworks.NuGetFramework,NuGet.Protocol.Core.Types.SourceCacheContext,NuGet.Common.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously discovers all versions of a package from a source and selects the best match.
+            </summary>
+            <remarks>This does not download the package.</remarks>
+            <param name="libraryRange">A library range.</param>
+            <param name="targetFramework">A target framework.</param>
+            <param name="cacheContext">A source cache context.</param>
+            <param name="logger">A logger.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous operation.
+            The task result (<see cref="P:System.Threading.Tasks.Task`1.Result" />) returns a <see cref="T:NuGet.LibraryModel.LibraryIdentity" />
+            instance.</returns>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="libraryRange" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="targetFramework" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="cacheContext" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="logger" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:OperationCanceledException">Thrown if <paramref name="cancellationToken" />
+            is cancelled.</exception>
+        </member>
+        <member name="M:NuGet.DependencyResolver.IRemoteDependencyProvider.GetDependenciesAsync(NuGet.LibraryModel.LibraryIdentity,NuGet.Frameworks.NuGetFramework,NuGet.Protocol.Core.Types.SourceCacheContext,NuGet.Common.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets package dependencies.
+            </summary>
+            <param name="libraryIdentity">A library identity.</param>
+            <param name="targetFramework">A target framework.</param>
+            <param name="cacheContext">A source cache context.</param>
+            <param name="logger">A logger.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous operation.
+            The task result (<see cref="P:System.Threading.Tasks.Task`1.Result" />) returns a <see cref="T:NuGet.LibraryModel.LibraryDependencyInfo" />
+            instance.</returns>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="libraryIdentity" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="targetFramework" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="cacheContext" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="logger" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:OperationCanceledException">Thrown if <paramref name="cancellationToken" />
+            is cancelled.</exception>
+        </member>
+        <member name="M:NuGet.DependencyResolver.IRemoteDependencyProvider.GetPackageDownloaderAsync(NuGet.Packaging.Core.PackageIdentity,NuGet.Protocol.Core.Types.SourceCacheContext,NuGet.Common.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets a package downloader.
+            </summary>
+            <param name="packageIdentity">A package identity.</param>
+            <param name="cacheContext">A source cache context.</param>
+            <param name="logger">A logger.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous operation.
+            The task result (<see cref="P:System.Threading.Tasks.Task`1.Result" />) returns a <see cref="T:NuGet.Packaging.IPackageDownloader" />
+            instance.</returns>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="packageIdentity" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="cacheContext" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:ArgumentNullException">Thrown if <paramref name="logger" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="!:OperationCanceledException">Thrown if <paramref name="cancellationToken" />
+            is cancelled.</exception>
+        </member>
+        <member name="T:NuGet.DependencyResolver.LocalDependencyProvider">
+            <summary>
+            A local dependency provider.
+            </summary>
+        </member>
+        <member name="M:NuGet.DependencyResolver.LocalDependencyProvider.#ctor(NuGet.DependencyResolver.IDependencyProvider)">
+            <summary>
+            Initializes a new <see cref="T:NuGet.DependencyResolver.LocalDependencyProvider" /> class.
+            </summary>
+            <param name="dependencyProvider"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="dependencyProvider" />
+            is <c>null</c>.</exception>
+        </member>
+        <member name="P:NuGet.DependencyResolver.LocalDependencyProvider.IsHttp">
+            <summary>
+            Gets a flag indicating whether or not the provider source is HTTP or HTTPS.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.LocalDependencyProvider.Source">
+            <summary>
+            Gets the package source.
+            </summary>
+            <remarks>Optional. This will be <c>null</c> for project providers.</remarks>
+        </member>
+        <member name="M:NuGet.DependencyResolver.LocalDependencyProvider.FindLibraryAsync(NuGet.LibraryModel.LibraryRange,NuGet.Frameworks.NuGetFramework,NuGet.Protocol.Core.Types.SourceCacheContext,NuGet.Common.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously discovers all versions of a package from a source and selects the best match.
+            </summary>
+            <remarks>This does not download the package.</remarks>
+            <param name="libraryRange">A library range.</param>
+            <param name="targetFramework">A target framework.</param>
+            <param name="cacheContext">A source cache context.</param>
+            <param name="logger">A logger.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous operation.
+            The task result (<see cref="P:System.Threading.Tasks.Task`1.Result" />) returns a <see cref="T:NuGet.LibraryModel.LibraryIdentity" />
+            instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="libraryRange" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="targetFramework" />
+            is either <c>null</c> or empty.</exception>
+        </member>
+        <member name="M:NuGet.DependencyResolver.LocalDependencyProvider.GetDependenciesAsync(NuGet.LibraryModel.LibraryIdentity,NuGet.Frameworks.NuGetFramework,NuGet.Protocol.Core.Types.SourceCacheContext,NuGet.Common.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets package dependencies.
+            </summary>
+            <param name="libraryIdentity">A library identity.</param>
+            <param name="targetFramework">A target framework.</param>
+            <param name="cacheContext">A source cache context.</param>
+            <param name="logger">A logger.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous operation.
+            The task result (<see cref="P:System.Threading.Tasks.Task`1.Result" />) returns a <see cref="T:NuGet.LibraryModel.LibraryDependencyInfo" />
+            instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="libraryIdentity" />
+            is either <c>null</c> or empty.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="targetFramework" />
+            is either <c>null</c> or empty.</exception>
+        </member>
+        <member name="M:NuGet.DependencyResolver.LocalDependencyProvider.GetPackageDownloaderAsync(NuGet.Packaging.Core.PackageIdentity,NuGet.Protocol.Core.Types.SourceCacheContext,NuGet.Common.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets a package downloader.
+            </summary>
+            <param name="packageIdentity">A package identity.</param>
+            <param name="cacheContext">A source cache context.</param>
+            <param name="logger">A logger.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>A task that represents the asynchronous operation.
+            The task result (<see cref="P:System.Threading.Tasks.Task`1.Result" />) returns a <see cref="T:NuGet.Packaging.IPackageDownloader" />
+            instance.</returns>
+            <exception cref="T:System.NotSupportedException">Thrown always.</exception>
+        </member>
+        <member name="T:NuGet.DependencyResolver.LocalMatch">
+            <summary>
+            Extends <see cref="T:NuGet.DependencyResolver.RemoteMatch" /> to add a reference to the full Library.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.LocalMatch.LocalLibrary">
+            <summary>
+            Full local Library metadata
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.LocalMatch.LocalProvider">
+            <summary>
+            The local provider where the library was found.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.RemoteWalkContext.FindLibraryEntryCache">
+            <summary>
+            Library entry cache.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.RemoteWalkContext.PackageFileCache">
+            <summary>
+            Files contained in a package.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.RemoteWalkContext.IsMsBuildBased">
+            <summary>
+            True if this is a csproj or similar project. Xproj should be false.
+            </summary>
+        </member>
+        <member name="T:NuGet.DependencyResolver.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:NuGet.DependencyResolver.Strings.Error_PackageNotFoundWhenExpected">
+            <summary>
+              Looks up a localized string similar to The feed '{0}' lists package '{1}' but multiple attempts to download the nupkg have failed. The feed is either invalid or required packages were removed while the current operation was in progress. Verify the package exists on the feed and try again..
+            </summary>
+        </member>
+        <member name="M:NuGet.Shared.EqualityUtility.OrderedEquals``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1},System.Collections.Generic.IEqualityComparer{``0})">
+            <summary>
+            Compares two enumberables for equality, ordered according to the specified key and optional comparer. Handles null values gracefully.
+            </summary>
+            <typeparam name="TSource">The type of the list</typeparam>
+            <typeparam name="TKey">The type of the sorting key</typeparam>
+            <param name="self">This list</param>
+            <param name="other">The other list</param>
+            <param name="keySelector">The function to extract the key from each item in the list</param>
+            <param name="orderComparer">An optional comparer for comparing keys</param>
+            <param name="sequenceComparer">An optional comparer for sequences</param>
+        </member>
+        <member name="M:NuGet.Shared.EqualityUtility.SequenceEqualWithNullCheck``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
+            <summary>
+            Compares two sequence for equality, allowing either sequence to be null. If one is null, both have to be
+            null for equality.
+            </summary>
+        </member>
+        <member name="T:NuGet.Shared.HashCodeCombiner">
+            <summary>
+            Hash code creator, based on the original NuGet hash code combiner/ASP hash code combiner implementations
+            </summary>
+        </member>
+        <member name="M:NuGet.Shared.HashCodeCombiner.GetHashCode(System.Object[])">
+            <summary>
+            Create a unique hash code for the given set of items
+            </summary>
+        </member>
+        <member name="M:NuGet.Shared.Extensions.AsList``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Return the enumerable as a List of T, copying if required. Optimized for common case where it is an List of T.
+            Avoid mutating the return value.
+            </summary>
+            <remarks>https://aspnetwebstack.codeplex.com/SourceControl/latest#src/Common/CollectionExtensions.cs</remarks>
+        </member>
+    </members>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>i2OzKT5dgw6tA3Y6sFb0RCLfZZQ=</DigestValue></Reference></SignedInfo><SignatureValue>CJGQWkPigL9ptL4A5qBQ1LQBc+CtbUP9oObl7xv0yIvj1OWlUrggy+hSUfW8iJIG0deKQtvzE09FCU5x1UVyegXlro5f+ZlDGoX3K2AfSLvHVdYlitm3EMADB7RB0C2H3tssgJJcCjwmySigmWaR7R5s1Tr8aJA4r/Sb0eN4eghF2NpNCcl4QCz244oNHsoKKVZStqEmUd5cAc6kYOJKKzZpahi08gtnZtU3hjVLxRa0+H3q2e4RO6TdM7QbB/IEaF+ScOzgm7G1kQMzZgqFJa/IFuAhkWrJPZPcslIaVdc4XnEXLZvOEA4Xfws+J0uYBAyiPP9u14kh+dnOR6Cf4A==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>m1K+Tyy0HVPLPV0jHraDo5/A5UrgV7PC+C3WipFfzBLODN0Ct0Z49Gub3ufLICGP1D4OJZRyOnhjZi61X+Hbl/2IjqiIl1VMHR4+qWlJLRNj+X7DparTv3/CBzkhMGY2lZdvp96rpRL2heloKGkmmxqet6/sU3hvw8wxMIf29zYrMEBZSEaAUajNDIDd40qeLXRV7OanRHrVE770wiR9DP0zzeYjX5rN1CltAtUyWmonz7DJAYuUr+UMi3offSITg4byWkvThGNXGmtJeDpU6Y/hhcblP5Yl5175yMvHofLyGw0iW7kv/Izp2yjEVRe26PTXes/9nNOP7ul2KoKMoQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIE2zCCA8OgAwIBAgITMwAAAbHd7bpU6WW4XwABAAABsTANBgkqhkiG9w0BAQUFADB5MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSMwIQYDVQQDExpNaWNyb3NvZnQgQ29kZSBTaWduaW5nIFBDQTAeFw0xODA3MTIyMDExMTlaFw0xOTA3MjYyMDExMTlaMHQxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xHjAcBgNVBAMTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJtSvk8stB1Tyz1dIx62g6OfwOVK4Fezwvgt1oqRX8wSzgzdArdGePRrm97nyyAhj9Q+DiWUcjp4Y2YutV/h25f9iI6oiJdVTB0ePqlpSS0TY/l+w6Wq079/wgc5ITBmNpWXb6feq6US9oXpaChpJpsanrev7FN4b8PMMTCH9vc2KzBAWUhGgFGozQyA3eNKni10Vezmp0R61RO+9MIkfQz9M83mI1+azdQpbQLVMlpqJ8+wyQGLlK/lDIt6H30iE4OG8lpL04RjVxprSXg6VOmP4YXG5T+WJede+cjLx6Hy8hsNIlu5L/yM6dsoxFUXtuj013rP/ZzTj+7pdiqCjKECAwEAAaOCAV8wggFbMBMGA1UdJQQMMAoGCCsGAQUFBwMDMB0GA1UdDgQWBBREE7QCnXc+kFVx9eQcf6wXFM8+czBQBgNVHREESTBHpEUwQzEpMCcGA1UECxMgTWljcm9zb2Z0IE9wZXJhdGlvbnMgUHVlcnRvIFJpY28xFjAUBgNVBAUTDTIyOTgwMys0Mzc5NTAwHwYDVR0jBBgwFoAUyxHoytK0FlgByTcuMxYWuUyaCh8wVgYDVR0fBE8wTTBLoEmgR4ZFaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraS9jcmwvcHJvZHVjdHMvTWljQ29kU2lnUENBXzA4LTMxLTIwMTAuY3JsMFoGCCsGAQUFBwEBBE4wTDBKBggrBgEFBQcwAoY+aHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraS9jZXJ0cy9NaWNDb2RTaWdQQ0FfMDgtMzEtMjAxMC5jcnQwDQYJKoZIhvcNAQEFBQADggEBAIOp8qYzxaF7HNJegK7spKbD6ShdVyUjjd0lCWlw6E1pFi+UuwXZm4DsWdBoZBuDNKjcz2ONnWt2APV7r0J0B8X8kcDirEUzll2x/fqORrJJ4kMGGZiFcXjTnunblRZBMTRwLEOWogJ3qS89YUpjWfGXfdFSlWCFqLwbRQc/2cGP91D1uX4IieRCxFiOQcCVOEkf1x34ME8pLztHWZI37pch7RdmkBwvLW1r/wt15aoS3fqvxBG04CEyWr8FzkX5P41Wrs5R1syufQQZMBLyv59IJpwOAA0oraXeRC3M1If/lEmVVwxNNJwjCt3DjTIJ9L01KMXe0Ig/qRIToTBwoBE=</X509Certificate><X509Certificate>MIIFvDCCA6SgAwIBAgIKYTMmGgAAAAAAMTANBgkqhkiG9w0BAQUFADBfMRMwEQYKCZImiZPyLGQBGRYDY29tMRkwFwYKCZImiZPyLGQBGRYJbWljcm9zb2Z0MS0wKwYDVQQDEyRNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwHhcNMTAwODMxMjIxOTMyWhcNMjAwODMxMjIyOTMyWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSMwIQYDVQQDExpNaWNyb3NvZnQgQ29kZSBTaWduaW5nIFBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALJyWVwZMGS/HZpgICBCmXZTbD4b1m/My/Hqa/6XFhDg3zp0gxq3L6Ay7P/ewkJOI9VyANs1VwqJyq4gSfTwaKxNS42lvXlLcZtHB9r9Jd+ddYjPqnNEf9eB2/O98jakyVxF3K+tPeAoaJcap6Vyc1bxF5Tk/TWUcqDWdl8ed0WDhTgW0HNbBbpnUo2lsmkv2hkL/pJ0KeJ2L1TdFDBZ+NKNYv3LyV9GMVC5JxPkQDDPcikQKCLHN049oDI9kM2hOAaFXE5WgigqBTK3S9dPY+fSLWLxRT3nrAgA9kahntFbjCZT6HqqSvJGzzc8OJ60d1ylF56NyxGPVjzBrAlfA9MCAwEAAaOCAV4wggFaMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFMsR6MrStBZYAck3LjMWFrlMmgofMAsGA1UdDwQEAwIBhjASBgkrBgEEAYI3FQEEBQIDAQABMCMGCSsGAQQBgjcVAgQWBBT90TFO0yaKleGYYDuoMW+mPLzYLTAZBgkrBgEEAYI3FAIEDB4KAFMAdQBiAEMAQTAfBgNVHSMEGDAWgBQOrIJgQFYnl+UlE/wq4QpTlVnkpDBQBgNVHR8ESTBHMEWgQ6BBhj9odHRwOi8vY3JsLm1pY3Jvc29mdC5jb20vcGtpL2NybC9wcm9kdWN0cy9taWNyb3NvZnRyb290Y2VydC5jcmwwVAYIKwYBBQUHAQEESDBGMEQGCCsGAQUFBzAChjhodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpL2NlcnRzL01pY3Jvc29mdFJvb3RDZXJ0LmNydDANBgkqhkiG9w0BAQUFAAOCAgEAWTk+fyZGr+tvQLEytWrrDi9uqEn361917Uw7LddDrQv+y+ktMaMjzHxQmIAhXaw9L0y6oqhWnONwu7i0+Hm1SXL3PupBf8rhDBdpy6WcIC36C1DEVs0t40rSvHDnqA2iA6VW4LiKS1fylUKc8fPv7uOGHzQ8uFaa8FMjhSqkghyT4pQHHfLiTviMocroE6WRTsgb0o9ylSpxbZsa+BzwU9ZnzCL/XB3Nooy9J7J5Y1ZEolHN+emjWFbdmwJFRC9f9Nqu1IIybvyklRPk62nnqaIsvsgrEA5ljpnb9aL6EiYJZTiU8XofSrvR4Vbo0HiWGFzJNRZf3ZMdSY4tvq00RBzuEBUaAF3dNVshzpjHCe6FDoxPbQ4TTj18KUicctHzbMrB7HCjV5JXfZSNoBtIA1r3z6NnCnSlNu0tLxfI5nI3EvRvsTxngvlSso0zFmUeDordEN5k9G/ORtTTF+l5xAS00/ss3x+KnqwK+xMnQK3k+eGpf0a7B2BHZWBATrBC7E7ts3Z52Ao0CW0cgDEf4g5U3eWh++VHEK1kmP9QFi58vwUheuKVQSdpw5OPlcmN2Jshrg1cnPCiroZogwxqLbt2awAdlq3yFnv2FoMkuYjPaqhHMS+a3ONxPdcAfmJH0c6IybgY+g5yjcGjPa8CQGr/aZuW4hCoELQ3UAjWwz0=</X509Certificate><X509Certificate>MIIFmTCCA4GgAwIBAgIQea0WoUqgpa1Mc1j0BxMuZTANBgkqhkiG9w0BAQUFADBfMRMwEQYKCZImiZPyLGQBGRYDY29tMRkwFwYKCZImiZPyLGQBGRYJbWljcm9zb2Z0MS0wKwYDVQQDEyRNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwHhcNMDEwNTA5MjMxOTIyWhcNMjEwNTA5MjMyODEzWjBfMRMwEQYKCZImiZPyLGQBGRYDY29tMRkwFwYKCZImiZPyLGQBGRYJbWljcm9zb2Z0MS0wKwYDVQQDEyRNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDzXfqAZ9Rap6kMLJAg0DUIPHWEzbcHiZyJ2t7Ow2D6kWhanpRxKRh2fMLgyCV2lA5Y+gQ0Nubfr/eAuulYCyuT5Z0F43cikfc0ZDwikR1e4QmQvBT+/HVYGeF5tweSo66IWQjYnwfKA1j8aCltMtfSqMtL/OELSDJP5uu4rU/kXG8TlJnbldV126gat5SRtHdb9UgMj2p5fRRwBH1tr5D12nDYR7e/my9s5wW34RFgrHmRFHzF1qbk4X7Vw37lktI8ALU2gt554W3ztW74nzPJy1J9c5g224uha6KVl5uj3sJNJv8GlmclBsjnrOTuEjOVMZnINQhONMp5U9W1vmMyWUA2wKVOBE0921sHM+RYv+8/U2TYQlk1V/0PRXwkBE2e1jh0EZcikM5oRHSSb9VLb7CG48c2QqDQ/MHAWvmjYbkwR3GWChawkcBCle8Qfyhq4yofseTNAz93cQTHIPxJDx1FiKTXy36IrY4t7EXbxFEEySr87IaemhGXW97OU4jm4rf9rJXCKEDb7wSQ34EzOdmyRaUjhwalVYkxuwYtYA5BGH0fLrWXyxHrFdUkpZTvFRSJ/Utz+jJb/NEzAPlZYnAHMuouq0Ate8rdIWcbMJmPFqojqEHRsG4RmzbE3kB0nOFYZcFgHnpbOMiPuwQmfNQWQOW2a2yqhv0Av87BNQIDAQABo1EwTzALBgNVHQ8EBAMCAcYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUDqyCYEBWJ5flJRP8KuEKU5VZ5KQwEAYJKwYBBAGCNxUBBAMCAQAwDQYJKoZIhvcNAQEFBQADggIBAMURTQM6YN1dUhF3j7K7NsiyBb+0t6jYIJ1cEwO2HCL6BhM1tshj1JpHbyZX0lXxBLEmX9apUGigvNK4bszD6azfGc14rFl0rGY0NsQbPmw4TDMOMBINoyb+UVMA/69aToQNDx/kbQUuToVLjWwzb1TSZKu/UK99ejmgN+1jAw/8EwbOFjbUVDuVG1FiOuVNF9QFOZKaJ6hbqr3su77jIIlgcWxWs6UT0G0OI36VA+1oPfLYY7hrTbboMLXhypRL96KqXZkwsj2nwlFsKCABJCcrSwC3nRFrcL6yEIK8DJto0I07JIeqmShynTNfWZC99d6TnjpiWjQ54ohVHbkGsMGJay3XacMZEjaE0Mmg2v8vaXiy5Xra69cMwPe9Yxe4ORM4ojZbe/KFVmodZGLBOOKqv1FmopT1EpxmIhBr8rcwki3yKfA9OxRDaKLxnCk3y844ICVtfGfzfiQSJAMIgUfspZ6X9RjXz7vV73aW7/3O21adlaBC+ZdY4dcxItNfWeY+biIA6kOEtiXb2fMIVmjAZGsdfOy2k6JiV24u2OdYj8QxSSbd3ik1h/UwcXBbFDxpvYkSfesuo/7Yf56CWlIKK8FDK9kwiJ/IEPuJjeahhXUzfmye23MTZGJppS99ypZtn/gETTCSPW4hFCHJPeDD/YprnUr90aGdmUN3P7Da</X509Certificate></X509Data></KeyInfo><Object Id="ts-countersig"><X509Data><X509Certificate>MIIE2jCCA8KgAwIBAgITMwAAAQJSCNjfQc3ntgAAAAABAjANBgkqhkiG9w0BAQUFADB3MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSEwHwYDVQQDExhNaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0EwHhcNMTgwODIzMjAyMDIyWhcNMTkxMTIzMjAyMDIyWjCByjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAldBMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xLTArBgNVBAsTJE1pY3Jvc29mdCBJcmVsYW5kIE9wZXJhdGlvbnMgTGltaXRlZDEmMCQGA1UECxMdVGhhbGVzIFRTUyBFU046MkFENC00QjkyLUZBMDExJTAjBgNVBAMTHE1pY3Jvc29mdCBUaW1lLVN0YW1wIHNlcnZpY2UwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2TCUV6nZ6x6RdQhK0FefmGN60tvnJGam2IH0rI75ZRJd+ku+ozhQ5XW1soJo71KGZV9Lg3/K+cG/7alMsuVTelwPVrFIYTZy/oA0AT9PgHpiUDwUlm4HYqdxZsM0/id69PhJsCtEIJp3Npcc1HWbXX4oACsRQtLzDgo1sU+Ze1+UkaTsWObxQbg6YuOkv04Dst4vGfbY+2vDeuRdadizN38Xx5wyLF1nXtsLGE9x6oRm5e5BihTGmnaoE5MtP5qX2ltdLfuamXlQnbGB3pmAfv7FyqNedCHJ816NIut+YjzMce3zbz4PwLCmsn9y3gncAgk/wOphNZsZxf4CVd4pvAgMBAAGjggEJMIIBBTAdBgNVHQ4EFgQUqeK8hE8b0+/EfF+ECVsQiAFdNnQwHwYDVR0jBBgwFoAUIzT42VJGcArtQPt2+7MrsMM1sw8wVAYDVR0fBE0wSzBJoEegRYZDaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraS9jcmwvcHJvZHVjdHMvTWljcm9zb2Z0VGltZVN0YW1wUENBLmNybDBYBggrBgEFBQcBAQRMMEowSAYIKwYBBQUHMAKGPGh0dHA6Ly93d3cubWljcm9zb2Z0LmNvbS9wa2kvY2VydHMvTWljcm9zb2Z0VGltZVN0YW1wUENBLmNydDATBgNVHSUEDDAKBggrBgEFBQcDCDANBgkqhkiG9w0BAQUFAAOCAQEAFBWJj8orBQx/GeoXfUASC5yKFR3HAUNr0sL+a3V3ToU7quCp7AS7ZZnVmab/GxRojTArJmpi09WP0fsjnX5A36PnYSe2wRXQ81GVxhxHzMHp+fwsnAGtfq6rfR7M5ShjZBmo3R0gaqno9i0JiAC6qXqzmzI33k43QAFCS//lRbuTgl6KXEhDTqDjuLPd8bDJnDH1X6JbL8SelGi1a9/h3KqHGGYEUjWNq8uB5UGuCMZgpIfObW9ocuGVN1s6ZHuD1Hf/PpVB8u+nkwEsNwmEhZuZbWMd/4TnkQD54Tjw9GfFSLc8qWhl7C3oktJPlqS4oTqvAszGqjykBIQwteG3+g==</X509Certificate><X509Certificate>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</X509Certificate></X509Data><CounterSignature ts-format="cms-timestamp-message" xmlns="http://schemas.microsoft.com/xmldsig/timestamp/2003">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</CounterSignature></Object></Signature></doc>
