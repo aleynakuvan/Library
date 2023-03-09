@@ -1,0 +1,14 @@
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.csproj.AssemblyReference.cache
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.csproj.SuggestedBindingRedirects.cache
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.Form1.resources
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.Properties.Resources.resources
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.csproj.GenerateResource.cache
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.csproj.CoreCompileInputs.cache
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\bin\Debug\User.exe.config
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\bin\Debug\User.exe
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\bin\Debug\User.pdb
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.exe
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.pdb
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.AnaForm.resources
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.AnaForm2.resources
+C:\Users\aleyn\OneDrive\Masaüstü\C#\BitirmeProjesi\User\obj\Debug\User.KayıtSayfası.resources
